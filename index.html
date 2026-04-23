@@ -562,8 +562,19 @@
 <div class="footer">
   AU Marks Predictor · Anna University R2017 / R2021 · Unofficial tool
 </div>
+<p style="font-size:12px;color:#888;text-align:center;margin-top:20px;">
+  Visitors: <span id="visitor-count">0</span>
+</p>
 
 <script>
+    fetch("https://api.countapi.xyz/hit/annapassmarks.vercel.app/visits")
+  .then(res => res.json())
+  .then(data => {
+    console.log("Total Visitors:", data.value);
+
+    const el = document.getElementById("visitor-count");
+    if (el) el.innerText = data.value;
+  });
 const SCHEME = {
   name: "Anna University R2017 / R2021",
   maxInternal: 20,
