@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AU Marks Predictor — Anna University</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0d0d10;
+    --surface:   #141418;
+    --card:      #1a1a20;
+    --border:    #2a2a35;
+    --border2:   #383848;
+    --amber:     #f0a020;
+    --amber-dim: #a06a10;
+    --amber-bg:  #1e1708;
+    --green:     #22c97a;
+    --green-bg:  #091a10;
+    --red:       #e84545;
+    --red-bg:    #1a0909;
+    --blue:      #5a9ef8;
+    --blue-bg:   #080f1e;
+    --text:      #e8e8f0;
+    --text2:     #8888a0;
+    --text3:     #55555f;
+    --radius:    12px;
+    --radius-sm: 8px;
+    --mono:      'JetBrains Mono', monospace;
+    --sans:      'Syne', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+
+  /* ─── Header ─── */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding: 28px 24px 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+  }
+  .header-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--amber);
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-dim);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  h1 {
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1.15;
+  }
+  h1 span { color: var(--amber); }
+  .subtitle {
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 4px;
+  }
+
+  /* ─── Layout ─── */
+  .container { max-width: 820px; margin: 0 auto; padding: 0 16px; }
+
+  /* ─── Tabs ─── */
+  .tab-bar {
+    display: flex;
+    gap: 2px;
+    padding: 20px 0 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+  .tab-btn {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    background: none;
+    border: none;
+    padding: 10px 18px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--amber); border-bottom-color: var(--amber); }
+
+  .tab-panel { display: none; padding: 28px 0; }
+  .tab-panel.active { display: block; }
+
+  /* ─── Cards ─── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .card + .card { margin-top: 16px; }
+
+  /* ─── Form elements ─── */
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 8px;
+  }
+  input[type="number"], select {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 500;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    -moz-appearance: textfield;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+  input[type="number"]:focus, select:focus { border-color: var(--amber); }
+  select { font-size: 14px; cursor: pointer; }
+  select option { background: var(--card); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width: 520px) { .form-row { grid-template-columns: 1fr; } }
+
+  /* ─── Slider ─── */
+  .slider-wrap { position: relative; padding-top: 8px; }
+  input[type="range"] {
+    width: 100%;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--border2);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 3px solid var(--card);
+    transition: transform 0.15s;
+  }
+  input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.2); }
+  .slider-val {
+    font-family: var(--mono);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--amber);
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: -0.03em;
+  }
+  .slider-val span { font-size: 14px; color: var(--text3); font-weight: 400; }
+
+  /* ─── Button ─── */
+  .btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--amber);
+    color: #0d0a04;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    margin-top: 20px;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn:active { transform: scale(0.98); }
+
+  /* ─── Result Panel ─── */
+  .result-panel {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+  }
+  .result-panel.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Status bar */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid;
+    margin-bottom: 20px;
+  }
+  .status-bar.safe    { background: var(--green-bg);  border-color: #1a5030; }
+  .status-bar.risk    { background: var(--amber-bg);  border-color: var(--amber-dim); }
+  .status-bar.danger  { background: var(--red-bg);    border-color: #5a1515; }
+  .status-bar.info    { background: var(--blue-bg);   border-color: #1a305a; }
+
+  .status-dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  }
+  .safe   .status-dot  { background: var(--green); }
+  .risk   .status-dot  { background: var(--amber); }
+  .danger .status-dot  { background: var(--red); }
+  .info   .status-dot  { background: var(--blue); }
+
+  .status-text { font-size: 14px; font-weight: 500; line-height: 1.4; }
+  .safe   .status-text { color: var(--green); }
+  .risk   .status-text { color: var(--amber); }
+  .danger .status-text { color: var(--red); }
+  .info   .status-text { color: var(--blue); }
+
+  /* Grade grid */
+  .grade-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .grade-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 12px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .grade-tile.target { border-color: var(--amber); background: var(--amber-bg); }
+  .grade-tile.achieved { border-color: #1a5030; background: var(--green-bg); }
+  .grade-tile.impossible { opacity: 0.4; }
+  .grade-tile .g-label {
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .grade-tile.target .g-label { color: var(--amber); }
+  .grade-tile.achieved .g-label { color: var(--green); }
+  .grade-tile.impossible .g-label { color: var(--text3); }
+  .grade-tile .g-label2 { color: var(--text); }
+  .grade-tile .g-sub {
+    font-size: 11px;
+    color: var(--text3);
+    font-family: var(--mono);
+  }
+  .grade-tile .g-req {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .grade-tile.target .g-req { color: var(--amber); }
+  .grade-tile.achieved .g-req { color: var(--green); }
+
+  /* Big stat */
+  .big-stat {
+    text-align: center;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+  }
+  .big-stat .bs-label { font-size: 12px; color: var(--text2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+  .big-stat .bs-num {
+    font-family: var(--mono);
+    font-size: 56px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .big-stat .bs-denom { font-size: 20px; color: var(--text3); font-weight: 400; }
+  .big-stat .bs-sub { font-size: 13px; color: var(--text2); margin-top: 6px; }
+
+  /* Progress bar */
+  .prog-wrap { margin: 16px 0; }
+  .prog-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text2); margin-bottom: 6px; }
+  .prog-track { background: var(--border); border-radius: 3px; height: 8px; overflow: hidden; }
+  .prog-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .prog-fill.green  { background: var(--green); }
+  .prog-fill.amber  { background: var(--amber); }
+  .prog-fill.red    { background: var(--red); }
+
+  /* Info section */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media(max-width: 520px) { .info-grid { grid-template-columns: 1fr; } }
+
+  .info-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+  }
+  .info-tile .it-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .info-tile .it-val { font-family: var(--mono); font-size: 16px; font-weight: 600; color: var(--text); }
+  .info-tile .it-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+  /* ─── Multi Subject ─── */
+  .subject-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .subject-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
+    align-items: center;
+    gap: 12px;
+    transition: border-color 0.2s;
+  }
+  .subject-row:hover { border-color: var(--border2); }
+
+  .subject-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    width: 20px;
+    text-align: right;
+  }
+  .subject-name-input {
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    padding: 4px 0;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .subject-name-input:focus { border-bottom-color: var(--amber); }
+  .subject-internal-input {
+    width: 72px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    padding: 8px 10px;
+    outline: none;
+    text-align: center;
+    transition: border-color 0.2s;
+    -moz-appearance: textfield;
+  }
+  .subject-internal-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .subject-internal-input:focus { border-color: var(--amber); }
+  .subject-label-sm { font-size: 10px; color: var(--text3); text-align: center; margin-top: 2px; font-family: var(--mono); }
+
+  .risk-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    min-width: 60px;
+    text-align: center;
+  }
+  .risk-low    { background: var(--green-bg);  color: var(--green); border: 1px solid #1a5030; }
+  .risk-medium { background: var(--amber-bg);  color: var(--amber); border: 1px solid var(--amber-dim); }
+  .risk-high   { background: var(--red-bg);    color: var(--red);   border: 1px solid #5a1515; }
+  .risk-fail   { background: #200808; color: #f07070; border: 1px solid #6a1010; }
+
+  .add-subject-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: none;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text3);
+    font-family: var(--sans);
+    font-size: 13px;
+    cursor: pointer;
+    width: 100%;
+    transition: border-color 0.2s, color 0.2s;
+    margin-top: 4px;
+  }
+  .add-subject-btn:hover { border-color: var(--border2); color: var(--text2); }
+
+  .subject-result {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 44px;
+  }
+  .sr-need  { color: var(--amber); }
+  .sr-safe  { color: var(--green); }
+  .sr-imp   { color: var(--red); }
+  .sr-fail  { color: #f07070; }
+
+  .del-btn {
+    background: none;
+    border: none;
+    color: var(--text3);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 4px;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .del-btn:hover { color: var(--red); }
+
+  .multi-summary {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    display: none;
+  }
+  .multi-summary.visible { display: block; }
+  .ms-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .ms-row:last-child { border-bottom: none; }
+  .ms-key { color: var(--text2); }
+  .ms-val { font-family: var(--mono); font-weight: 600; color: var(--text); }
+
+  /* ─── How it Works ─── */
+  .section-heading {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin: 28px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .formula-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 14px 18px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .formula-block .kw { color: var(--amber); }
+  .formula-block .cmt { color: var(--text3); }
+
+  .info-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-row .ik { color: var(--text2); min-width: 120px; }
+  .info-row .iv { color: var(--text); }
+
+  .grade-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  .grade-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .grade-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    color: var(--text);
+  }
+  .grade-table tr:last-child td { border-bottom: none; }
+  .grade-table tr:hover td { background: var(--surface); }
+  .grade-table .gp { color: var(--amber); font-weight: 600; }
+
+  /* ─── Footer ─── */
+  .footer {
+    text-align: center;
+    padding: 32px 16px 0;
+    font-size: 12px;
+    color: var(--text3);
+    line-height: 1.7;
+  }
+
+  /* ─── Animations ─── */
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .status-dot { animation: pulse-dot 2.5s ease infinite; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+      <span class="header-badge">R2017 / R2021</span>
+    </div>
+    <h1>AU Marks <span>Predictor</span></h1>
+    <p class="subtitle">Anna University · External marks required calculator</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('single', this)">Single Subject</button>
+    <button class="tab-btn" onclick="switchTab('multi', this)">Multi Subject</button>
+    <button class="tab-btn" onclick="switchTab('howto', this)">How It Works</button>
+  </div>
+
+  <!-- ═══════════════ SINGLE SUBJECT ═══════════════ -->
+  <div class="tab-panel active" id="tab-single">
+
+    <div class="card">
+      <div style="margin-bottom:20px;">
+        <div class="slider-val" id="slider-display">14 <span>/ 20 internal</span></div>
+        <div class="slider-wrap">
+          <input type="range" min="0" max="20" value="14" id="internal-slider"
+            oninput="syncSlider(this.value)" onchange="triggerCalc()">
+        </div>
+        <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:6px;">
+          <span>0</span><span>10</span><span>20</span>
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-bottom:20px;">
+        <div>
+          <label>Internal Marks (of 20)</label>
+          <input type="number" id="internal-input" min="0" max="20" value="14"
+            oninput="syncInput(this.value)" onchange="triggerCalc()">
+        </div>
+        <div>
+          <label>Target Grade (optional)</label>
+          <select id="target-grade" onchange="triggerCalc()">
+            <option value="PASS">Pass (≥50)</option>
+            <option value="B">B (51–60)</option>
+            <option value="B+">B+ (61–70)</option>
+            <option value="A" selected>A (71–80)</option>
+            <option value="A+">A+ (81–90)</option>
+            <option value="O">O (91–100)</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn" onclick="calculateSingle()">Calculate Required External Marks →</button>
+    </div>
+
+    <!-- Result section -->
+    <div class="result-panel" id="single-result">
+      <div style="height:20px;"></div>
+
+      <div class="status-bar" id="status-bar">
+        <div class="status-dot"></div>
+        <div class="status-text" id="status-text"></div>
+      </div>
+
+      <div class="big-stat">
+        <div class="bs-label">Required External Marks to Pass</div>
+        <div class="bs-num" id="pass-req">—<span class="bs-denom">/80</span></div>
+        <div class="bs-sub" id="pass-sub">—</div>
+      </div>
+
+      <div class="prog-wrap">
+        <div class="prog-label">
+          <span>External difficulty</span>
+          <span id="prog-pct">0%</span>
+        </div>
+        <div class="prog-track">
+          <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="section-heading" style="margin-top:24px;">Grade Breakdown</div>
+      <div class="grade-grid" id="grade-grid"></div>
+
+      <div class="section-heading">Details</div>
+      <div class="info-grid" id="detail-tiles"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MULTI SUBJECT ═══════════════ -->
+  <div class="tab-panel" id="tab-multi">
+
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div style="padding:16px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:14px;font-weight:600;color:var(--text);">Subjects</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);">Internal / 20 → Ext needed</div>
+      </div>
+      <div style="padding:16px;">
+        <div class="subject-list" id="subject-list"></div>
+        <button class="add-subject-btn" onclick="addSubject()">+ Add subject</button>
+      </div>
+    </div>
+
+    <div class="multi-summary" id="multi-summary">
+      <div class="section-heading" style="margin-top:0;">Summary</div>
+      <div id="multi-summary-rows"></div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+  <div class="tab-panel" id="tab-howto">
+
+    <div class="card">
+      <div class="section-heading" style="margin-top:0;">Marking Scheme</div>
+      <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:16px;">
+        Based on Anna University R2017 and R2021 regulations for all UG programs (B.E / B.Tech). Both regulations follow identical marking structures.
+      </p>
+      <div class="info-row"><span class="ik">Regulation</span><span class="iv">R2017 / R2021 (identical scheme)</span></div>
+      <div class="info-row"><span class="ik">Internal (IA)</span><span class="iv">20 marks total</span></div>
+      <div class="info-row"><span class="ik">External (ESE)</span><span class="iv">80 marks total</span></div>
+      <div class="info-row"><span class="ik">Grand Total</span><span class="iv">100 marks</span></div>
+      <div class="info-row"><span class="ik">Min. External</span><span class="iv">32 / 80 (40% of ESE)</span></div>
+      <div class="info-row"><span class="ik">Min. Total</span><span class="iv">50 / 100 (50% overall)</span></div>
+      <div class="info-row"><span class="ik">Internal min</span><span class="iv">No separate pass minimum for IA</span></div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="section-heading" style="margin-top:0;">Pass Condition Logic</div>
+      <div class="formula-block">
+        <span class="kw">BOTH</span> of these must be satisfied:<br><br>
+        Condition 1: external_marks <span class="kw">≥ 32</span> <span class="cmt">// 40% of 80</span><br>
+        Condition 2: (internal + external) <span class="kw">≥ 50</span> <span class="cmt">// 50% overall</span><br><br>
+        required_for_condition2 = 50 - internal<br>
+        required_to_pass = <span class="kw">max</span>(32, required_for_condition2)
+      </div>
+      <div class="formula-block">
+        <span class="kw">requiredForGrade</span>(internal, targetTotal):<br>
+          &nbsp;&nbsp;return <span class="kw">max</span>(32, targetTotal - internal)<br><br>
+        <span class="cmt">// If required &gt; 80 → impossible</span><br>
+        <span class="cmt">// If required ≤ 0  → already safe (just need ≥32 external)</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="section-heading" style="margin-top:0;">Grade Classification</div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:14px;">Official Anna University letter grades and CGPA grade points:</p>
+      <table class="grade-table">
+        <thead>
+          <tr><th>Grade</th><th>Total Range</th><th>GPA Points</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>O</td><td>91 – 100</td><td class="gp">10</td><td>Outstanding</td></tr>
+          <tr><td>A+</td><td>81 – 90</td><td class="gp">9</td><td>Excellent</td></tr>
+          <tr><td>A</td><td>71 – 80</td><td class="gp">8</td><td>Very Good</td></tr>
+          <tr><td>B+</td><td>61 – 70</td><td class="gp">7</td><td>Good</td></tr>
+          <tr><td>B</td><td>51 – 60</td><td class="gp">6</td><td>Average</td></tr>
+          <tr><td>RA</td><td>Below 50 or Ext &lt;32</td><td class="gp">—</td><td>Reappear / Fail</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="section-heading" style="margin-top:0;">Risk Level Definitions (Multi-Subject)</div>
+      <div class="info-row">
+        <span class="ik"><span class="risk-pill risk-low">Low</span></span>
+        <span class="iv">Required external ≤ 45 (well within reach)</span>
+      </div>
+      <div class="info-row">
+        <span class="ik"><span class="risk-pill risk-medium">Medium</span></span>
+        <span class="iv">Required external 46–65 (needs good preparation)</span>
+      </div>
+      <div class="info-row">
+        <span class="ik"><span class="risk-pill risk-high">High</span></span>
+        <span class="iv">Required external 66–80 (very demanding)</span>
+      </div>
+      <div class="info-row">
+        <span class="ik"><span class="risk-pill risk-fail">Fail</span></span>
+        <span class="iv">Required external &gt; 80 (impossible to pass)</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="section-heading" style="margin-top:0;">Assumptions & Disclaimers</div>
+      <p style="font-size:13px;color:var(--text2);line-height:1.7;">
+        This calculator uses <strong style="color:var(--text);">deterministic formulas</strong> based on publicly documented Anna University R2017/R2021 regulations. Internal assessment is treated as a fixed input. Arrear rules, practical components, and subject-specific exceptions are not modelled. Results are indicative — always verify with your department or official results portal.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  AU Marks Predictor · Anna University R2017 / R2021 · Unofficial tool for estimation only
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   CORE CALCULATION ENGINE
+   Anna University R2017 / R2021
+═══════════════════════════════════════════════════════════ */
+
+const SCHEME = {
+  name: "Anna University R2017 / R2021",
+  maxInternal: 20,
+  maxExternal: 80,
+  maxTotal: 100,
+  minExternal: 32,   // 40% of 80
+  minTotal: 50,      // 50% overall
+  grades: [
+    { label: "O",  min: 91, max: 100, gpa: 10, color: "#22c97a" },
+    { label: "A+", min: 81, max: 90,  gpa: 9,  color: "#5a9ef8" },
+    { label: "A",  min: 71, max: 80,  gpa: 8,  color: "#f0a020" },
+    { label: "B+", min: 61, max: 70,  gpa: 7,  color: "#c97af0" },
+    { label: "B",  min: 51, max: 60,  gpa: 6,  color: "#f07860" },
+    { label: "PASS", min: 50, max: 50, gpa: null, color: "#8888a0" }, // exactly 50
+  ]
+};
+
+/**
+ * Clamp a value between min and max.
+ */
+function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
+
+/**
+ * Get grade label for a total score.
+ * Returns "RA" if failing, else "O"/"A+"/"A"/"B+"/"B".
+ */
+function getGradeForTotal(total, external) {
+  if (external < SCHEME.minExternal || total < SCHEME.minTotal) return "RA";
+  for (const g of SCHEME.grades) {
+    if (total >= g.min && total <= g.max) return g.label;
+  }
+  return "RA";
+}
+
+/**
+ * calculateRequiredExternal(internalMarks)
+ * Returns the minimum external marks needed to PASS.
+ *
+ * Two conditions must both be satisfied:
+ *   1) external >= 32  (min external rule)
+ *   2) internal + external >= 50  (min total rule)
+ *
+ * @returns {object} { required, isPossible, isAlreadySafe, note }
+ */
+function calculateRequiredExternal(internalMarks) {
+  const ia = clamp(internalMarks, 0, SCHEME.maxInternal);
+
+  const fromTotalRule = SCHEME.minTotal - ia;     // need this for overall ≥50
+  const fromExternalRule = SCHEME.minExternal;    // always need at least 32
+
+  const required = Math.max(fromExternalRule, fromTotalRule);
+
+  const isPossible = required <= SCHEME.maxExternal;
+  const isAlreadySafe = fromTotalRule <= 0; // internal alone gets you near 50
+
+  // Even if fromTotalRule <= 0, student still needs 32 externally
+  return {
+    required: isPossible ? required : null,
+    isPossible,
+    isAlreadySafe,
+    fromTotalRule,
+    fromExternalRule,
+    bindingConstraint: fromTotalRule > fromExternalRule ? "total" : "external",
+    note: !isPossible
+      ? "Impossible: even 80/80 external is not enough to pass."
+      : isAlreadySafe
+        ? `Internal marks are high. Just need minimum external (${SCHEME.minExternal}).`
+        : `Need ${required}/80 externally.`
+  };
+}
+
+/**
+ * calculateMarksForGrade(internalMarks, targetGrade)
+ * Returns required external marks for a specific target grade.
+ *
+ * @param {number} internalMarks
+ * @param {string} targetGrade  - "PASS" | "B" | "B+" | "A" | "A+" | "O"
+ * @returns {object} { required, isPossible, grade, minTotal, note }
+ */
+function calculateMarksForGrade(internalMarks, targetGrade) {
+  const ia = clamp(internalMarks, 0, SCHEME.maxInternal);
+
+  const gradeTargets = {
+    "PASS": 50, "B": 51, "B+": 61, "A": 71, "A+": 81, "O": 91
+  };
+
+  const minTotal = gradeTargets[targetGrade] ?? 50;
+  const fromTotal = minTotal - ia;
+  const required = Math.max(SCHEME.minExternal, fromTotal);
+  const isPossible = required <= SCHEME.maxExternal;
+
+  return {
+    required: isPossible ? required : null,
+    isPossible,
+    grade: targetGrade,
+    minTotal,
+    needed: fromTotal,
+    note: !isPossible
+      ? `Cannot achieve ${targetGrade} grade. Even 80/80 gives only ${ia + 80}/100.`
+      : `Need ${required}/80 for ${targetGrade} (total ≥ ${minTotal}).`
+  };
+}
+
+/**
+ * checkFailureCondition(internalMarks)
+ * Checks if a student is already at risk due to low internals.
+ *
+ * @returns {object} { isFailingInternals, maximumAchievable, canPass, riskLevel }
+ */
+function checkFailureCondition(internalMarks) {
+  const ia = clamp(internalMarks, 0, SCHEME.maxInternal);
+  const maxAchievable = ia + SCHEME.maxExternal; // best case total
+  const canPass = maxAchievable >= SCHEME.minTotal;
+
+  const passResult = calculateRequiredExternal(ia);
+  const riskLevel = !canPass
+    ? "impossible"
+    : passResult.required >= 66
+      ? "high"
+      : passResult.required >= 46
+        ? "medium"
+        : "low";
+
+  return {
+    internalMarks: ia,
+    maximumAchievable: maxAchievable,
+    canPass,
+    riskLevel,
+    requiredExternal: passResult.required,
+    isFailingInternals: !canPass,
+    message: !canPass
+      ? `Even with 80/80 external (${maxAchievable} total), pass is not possible.`
+      : `Maximum achievable total: ${maxAchievable}/100.`
+  };
+}
+
+/**
+ * calculateMultipleSubjects(subjectsArray)
+ * subjectsArray: [{ name, internal }, ...]
+ * @returns Array of per-subject results with risk levels
+ */
+function calculateMultipleSubjects(subjectsArray) {
+  return subjectsArray.map((s, i) => {
+    const pass = calculateRequiredExternal(s.internal);
+    const failure = checkFailureCondition(s.internal);
+
+    return {
+      index: i + 1,
+      name: s.name || `Subject ${i + 1}`,
+      internal: s.internal,
+      requiredExternal: pass.required,
+      isPossible: pass.isPossible,
+      riskLevel: failure.riskLevel,
+      maximumTotal: s.internal + SCHEME.maxExternal,
+      note: pass.note
+    };
+  });
+}
+
+/**
+ * getCalculationDetails(internalMarks, targetGrade)
+ * Returns structured transparency object for display / SEO content.
+ */
+function getCalculationDetails(internalMarks, targetGrade = "PASS") {
+  const pass = calculateRequiredExternal(internalMarks);
+  const target = calculateMarksForGrade(internalMarks, targetGrade);
+  const failure = checkFailureCondition(internalMarks);
+
+  return {
+    scheme: {
+      name: SCHEME.name,
+      internal: `${SCHEME.maxInternal} marks`,
+      external: `${SCHEME.maxExternal} marks`,
+      total: `${SCHEME.maxTotal} marks`,
+      passConditions: [
+        `External minimum: ${SCHEME.minExternal}/${SCHEME.maxExternal} (40%)`,
+        `Total minimum: ${SCHEME.minTotal}/${SCHEME.maxTotal} (50%)`
+      ]
+    },
+    input: {
+      internalMarks,
+      targetGrade
+    },
+    passRequirement: pass,
+    targetGradeRequirement: target,
+    failureAnalysis: failure,
+    gradeTable: SCHEME.grades.map(g => ({
+      grade: g.label,
+      range: `${g.min}–${g.max}`,
+      gpa: g.gpa,
+      externalNeeded: Math.max(SCHEME.minExternal, g.min - internalMarks)
+    })),
+    assumptions: [
+      "Internal assessment marks are final and cannot change.",
+      "No practical/lab component modelled separately.",
+      "Arrear or supplementary exam rules not applied.",
+      "Grade awarded only if BOTH external ≥32 AND total ≥50."
+    ]
+  };
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UI LOGIC
+═══════════════════════════════════════════════════════════ */
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+function syncSlider(val) {
+  document.getElementById('internal-input').value = val;
+  document.getElementById('slider-display').innerHTML =
+    `${val} <span>/ 20 internal</span>`;
+  updateSliderTrack(val);
+}
+
+function syncInput(val) {
+  val = clamp(parseInt(val) || 0, 0, 20);
+  document.getElementById('internal-slider').value = val;
+  document.getElementById('slider-display').innerHTML =
+    `${val} <span>/ 20 internal</span>`;
+  document.getElementById('internal-input').value = val;
+  updateSliderTrack(val);
+}
+
+function updateSliderTrack(val) {
+  const pct = (val / 20) * 100;
+  const slider = document.getElementById('internal-slider');
+  slider.style.background = `linear-gradient(to right, #a06a10 0%, #f0a020 ${pct}%, #2a2a35 ${pct}%, #2a2a35 100%)`;
+}
+
+function triggerCalc() {
+  const ia = parseInt(document.getElementById('internal-input').value) || 0;
+  syncInput(ia);
+  calculateSingle();
+}
+
+function calculateSingle() {
+  const ia = parseInt(document.getElementById('internal-input').value) || 0;
+  const tg = document.getElementById('target-grade').value;
+
+  const details = getCalculationDetails(ia, tg);
+  const pass = details.passRequirement;
+  const target = details.targetGradeRequirement;
+
+  // Show result panel
+  const panel = document.getElementById('single-result');
+  panel.classList.remove('visible');
+  void panel.offsetWidth; // reflow
+  setTimeout(() => panel.classList.add('visible'), 10);
+
+  // Status bar
+  const sb = document.getElementById('status-bar');
+  const st = document.getElementById('status-text');
+  sb.className = 'status-bar';
+
+  if (!pass.isPossible) {
+    sb.classList.add('danger');
+    st.textContent = `Cannot pass even with 80/80 external. Max achievable: ${ia + 80}/100.`;
+  } else if (!target.isPossible) {
+    sb.classList.add('risk');
+    st.textContent = `Grade ${tg} is not achievable, but you CAN pass. Required to pass: ${pass.required}/80.`;
+  } else if (pass.isAlreadySafe && pass.required <= 32) {
+    sb.classList.add('safe');
+    st.textContent = `You only need the minimum external (${SCHEME.minExternal}/80) to pass. Total rule is not binding.`;
+  } else {
+    const riskLevel = pass.required >= 66 ? 'danger' : pass.required >= 46 ? 'risk' : 'safe';
+    sb.classList.add(riskLevel);
+    const riskWord = pass.required >= 66 ? 'High pressure' : pass.required >= 46 ? 'Moderate' : 'Comfortable';
+    st.textContent = `${riskWord}: Need ${pass.required}/80 to pass. Target grade ${tg}: ${target.isPossible ? target.required + '/80' : 'not possible'}.`;
+  }
+
+  // Big stat
+  const passNum = document.getElementById('pass-req');
+  const passSub = document.getElementById('pass-sub');
+  if (!pass.isPossible) {
+    passNum.innerHTML = `∞ <span class="bs-denom">impossible</span>`;
+    passSub.textContent = `Cannot pass with any external score`;
+  } else {
+    passNum.innerHTML = `${pass.required}<span class="bs-denom">/80</span>`;
+    passSub.textContent = `${pass.bindingConstraint === 'total'
+      ? `Binding: total rule (need ≥50 overall)`
+      : `Binding: external minimum rule (40% of 80)`}`;
+  }
+
+  // Progress bar
+  const prog = pass.isPossible ? (pass.required / 80) * 100 : 100;
+  const pf = document.getElementById('prog-fill');
+  const pp = document.getElementById('prog-pct');
+  pf.style.width = '0%';
+  setTimeout(() => { pf.style.width = prog + '%'; }, 50);
+  pp.textContent = Math.round(prog) + '%';
+  pf.className = 'prog-fill ' + (prog >= 83 ? 'red' : prog >= 58 ? 'amber' : 'green');
+
+  // Grade grid
+  const gg = document.getElementById('grade-grid');
+  gg.innerHTML = '';
+  const gradeDefs = [
+    { label: "O",  min: 91, desc: "≥91" },
+    { label: "A+", min: 81, desc: "81–90" },
+    { label: "A",  min: 71, desc: "71–80" },
+    { label: "B+", min: 61, desc: "61–70" },
+    { label: "B",  min: 51, desc: "51–60" },
+    { label: "Pass", min: 50, desc: "≥50" },
+  ];
+
+  gradeDefs.forEach(g => {
+    const req = Math.max(SCHEME.minExternal, g.min - ia);
+    const possible = req <= SCHEME.maxExternal;
+    const isTarget = g.label === tg || (g.label === "Pass" && tg === "PASS");
+    const tile = document.createElement('div');
+    tile.className = 'grade-tile ' + (!possible ? 'impossible' : isTarget ? 'target' : 'g-label2');
+    tile.innerHTML = `
+      <div class="g-label ${possible && !isTarget ? 'g-label2' : ''}">${g.label}</div>
+      <div class="g-sub">${g.desc}</div>
+      <div class="g-req">${possible ? req + '/80' : '× impossible'}</div>
+    `;
+    gg.appendChild(tile);
+  });
+
+  // Detail tiles
+  const dt = document.getElementById('detail-tiles');
+  dt.innerHTML = `
+    <div class="info-tile">
+      <div class="it-label">Your Internal</div>
+      <div class="it-val">${ia} / 20</div>
+      <div class="it-sub">${Math.round((ia/20)*100)}% of internal</div>
+    </div>
+    <div class="info-tile">
+      <div class="it-label">Max Achievable Total</div>
+      <div class="it-val">${ia + 80} / 100</div>
+      <div class="it-sub">If you score 80/80 external</div>
+    </div>
+    <div class="info-tile">
+      <div class="it-label">Need for Pass</div>
+      <div class="it-val">${pass.isPossible ? pass.required + ' / 80' : 'Impossible'}</div>
+      <div class="it-sub">Minimum external marks</div>
+    </div>
+    <div class="info-tile">
+      <div class="it-label">Need for ${tg}</div>
+      <div class="it-val">${target.isPossible ? target.required + ' / 80' : 'Impossible'}</div>
+      <div class="it-sub">External for target grade</div>
+    </div>
+  `;
+}
+
+/* ─── Multi Subject ─── */
+let subjects = [
+  { name: "Engineering Mathematics", internal: 16 },
+  { name: "Data Structures", internal: 12 },
+  { name: "Computer Networks", internal: 8 },
+];
+
+function renderSubjects() {
+  const list = document.getElementById('subject-list');
+  list.innerHTML = '';
+  subjects.forEach((s, i) => {
+    const pass = calculateRequiredExternal(s.internal);
+    const failure = checkFailureCondition(s.internal);
+
+    let riskHtml = '';
+    if (!pass.isPossible) {
+      riskHtml = `<span class="risk-pill risk-fail">FAIL</span>`;
+    } else if (failure.riskLevel === 'high') {
+      riskHtml = `<span class="risk-pill risk-high">High</span>`;
+    } else if (failure.riskLevel === 'medium') {
+      riskHtml = `<span class="risk-pill risk-medium">Medium</span>`;
+    } else {
+      riskHtml = `<span class="risk-pill risk-low">Low</span>`;
+    }
+
+    let reqHtml = '';
+    if (!pass.isPossible) {
+      reqHtml = `<div class="subject-result sr-fail">—</div>`;
+    } else {
+      const cls = failure.riskLevel === 'high' ? 'sr-imp' : failure.riskLevel === 'medium' ? 'sr-need' : 'sr-safe';
+      reqHtml = `<div class="subject-result ${cls}">${pass.required}<span style="font-size:10px;color:var(--text3)">/80</span></div>`;
+    }
+
+    const row = document.createElement('div');
+    row.className = 'subject-row';
+    row.innerHTML = `
+      <div class="subject-num">${i + 1}</div>
+      <div>
+        <input class="subject-name-input" type="text" placeholder="Subject name" value="${s.name}"
+          oninput="subjects[${i}].name = this.value">
+        <div class="subject-label-sm">name</div>
+      </div>
+      <div>
+        <input class="subject-internal-input" type="number" min="0" max="20" value="${s.internal}"
+          oninput="subjects[${i}].internal = clamp(parseInt(this.value)||0,0,20); renderSubjects()">
+        <div class="subject-label-sm">internal</div>
+      </div>
+      ${reqHtml}
+      ${riskHtml}
+      <button class="del-btn" onclick="removeSubject(${i})">×</button>
+    `;
+    list.appendChild(row);
+  });
+
+  updateMultiSummary();
+}
+
+function addSubject() {
+  subjects.push({ name: `Subject ${subjects.length + 1}`, internal: 10 });
+  renderSubjects();
+}
+
+function removeSubject(i) {
+  subjects.splice(i, 1);
+  renderSubjects();
+}
+
+function updateMultiSummary() {
+  const results = calculateMultipleSubjects(subjects);
+  const summary = document.getElementById('multi-summary');
+  const rows = document.getElementById('multi-summary-rows');
+
+  if (!results.length) { summary.classList.remove('visible'); return; }
+  summary.classList.add('visible');
+
+  const impossible = results.filter(r => !r.isPossible).length;
+  const high = results.filter(r => r.riskLevel === 'high' && r.isPossible).length;
+  const medium = results.filter(r => r.riskLevel === 'medium' && r.isPossible).length;
+  const low = results.filter(r => r.riskLevel === 'low').length;
+  const avgInternal = results.reduce((s, r) => s + r.internal, 0) / results.length;
+
+  rows.innerHTML = `
+    <div class="ms-row"><span class="ms-key">Total subjects</span><span class="ms-val">${results.length}</span></div>
+    <div class="ms-row"><span class="ms-key">Average internal</span><span class="ms-val">${avgInternal.toFixed(1)} / 20</span></div>
+    <div class="ms-row"><span class="ms-key">Risk: Low</span><span class="ms-val" style="color:var(--green)">${low} subject${low !== 1 ? 's' : ''}</span></div>
+    <div class="ms-row"><span class="ms-key">Risk: Medium</span><span class="ms-val" style="color:var(--amber)">${medium} subject${medium !== 1 ? 's' : ''}</span></div>
+    <div class="ms-row"><span class="ms-key">Risk: High</span><span class="ms-val" style="color:var(--red)">${high} subject${high !== 1 ? 's' : ''}</span></div>
+    <div class="ms-row"><span class="ms-key">Cannot pass</span><span class="ms-val" style="color:#f07070">${impossible} subject${impossible !== 1 ? 's' : ''}</span></div>
+  `;
+}
+
+/* ─── Init ─── */
+window.addEventListener('DOMContentLoaded', () => {
+  syncSlider(14);
+  calculateSingle();
+  renderSubjects();
+});
+</script>
+</body>
+</html>
