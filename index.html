@@ -567,14 +567,32 @@
 </p>
 
 <script>
-    fetch("https://api.countapi.xyz/hit/annapassmarks.vercel.app/visits")
-  .then(res => res.json())
-  .then(data => {
-    console.log("Total Visitors:", data.value);
+    (function () {
+  const NAMESPACE = "annapassmarks_unique_123"; // change if needed
+  const KEY = "visits";
 
+  function updateUI(count) {
+    console.log("Visitors:", count);
     const el = document.getElementById("visitor-count");
-    if (el) el.innerText = data.value;
-  });
+    if (el) el.innerText = count;
+  }
+
+  // Try CountAPI
+  fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${KEY}`)
+    .then(res => res.json())
+    .then(data => {
+      updateUI(data.value);
+    })
+    .catch(err => {
+      console.log("CountAPI failed, using fallback", err);
+
+      // Fallback → localStorage (always works)
+      let visits = localStorage.getItem("fallback_visits") || 0;
+      visits++;
+      localStorage.setItem("fallback_visits", visits);
+      updateUI(visits);
+    });
+})();
 const SCHEME = {
   name: "Anna University R2017 / R2021",
   maxInternal: 20,
