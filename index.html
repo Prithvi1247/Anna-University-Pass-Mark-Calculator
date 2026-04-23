@@ -410,6 +410,7 @@
   .danger .status-dot { background: var(--red); }
 </style>
 </head>
+<script defer src="/_vercel/insights/script.js"></script>
 <body>
 
 <div class="header">
@@ -567,20 +568,7 @@
 </p>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-  const url = "https://api.countapi.xyz/hit/annapassmarks_global_counter/visits";
-
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      console.log("Visitors:", data.value);
-      document.getElementById("visitor-count").innerText = data.value;
-    })
-    .catch(err => {
-      console.log("Counter failed:", err);
-      document.getElementById("visitor-count").innerText = "—";
-    });
-});
+   
 const SCHEME = {
   name: "Anna University R2017 / R2021",
   maxInternal: 20,
