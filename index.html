@@ -147,7 +147,39 @@
     font-size: 20px;
     font-weight: 600;
     color: var(--text2);
+    margin-bottom: 16px;
   }
+
+  .grade-targets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .grade-item {
+    text-align: left;
+    background: rgba(255,255,255,0.03);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+  }
+  .grade-label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; }
+  .grade-val { font-family: var(--mono); font-size: 16px; font-weight: 600; color: var(--amber); margin-top: 4px; }
+
+  .rules-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.02);
+    border-radius: var(--radius-sm);
+    text-align: left;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+  .rules-box b { color: var(--text); }
+  .rules-list { list-style: none; margin-top: 8px; }
+  .rules-list li::before { content: "• "; color: var(--amber); }
 
   .action-btns {
     display: grid;
@@ -167,6 +199,14 @@
     font-family: var(--sans);
   }
 
+  .footer-trust {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 12px;
+    color: #555;
+    padding: 20px;
+  }
+
   .toast {
     position: fixed;
     bottom: 20px;
@@ -179,6 +219,7 @@
     font-size: 14px;
     font-weight: 600;
     display: none;
+    z-index: 100;
   }
 </style>
 </head>
@@ -203,12 +244,36 @@
     <div class="big-stat">
       <div class="bs-num" id="pass-req"></div>
       <div class="bs-sub" id="emotional-msg"></div>
+      
+      <div class="grade-targets" id="grade-targets">
+        <div class="grade-item">
+          <div class="grade-label">To get A grade (~75+)</div>
+          <div class="grade-val" id="a-grade-req">--</div>
+        </div>
+        <div class="grade-item">
+          <div class="grade-label">To get O grade (~90+)</div>
+          <div class="grade-val" id="o-grade-req">--</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rules-box">
+      <b>Based on Anna University pattern:</b>
+      <ul class="rules-list">
+        <li>Internal: 20 marks</li>
+        <li>External: 80 marks</li>
+        <li>Pass: 50 total + 32 external</li>
+      </ul>
     </div>
 
     <div class="action-btns">
       <button class="btn-secondary" onclick="copyResult()">Copy Result</button>
       <button class="btn-secondary" onclick="resetApp()">Try your friend's marks 😭</button>
     </div>
+  </div>
+
+  <div class="footer-trust">
+    Built based on common AU evaluation rules (R2017/R2021)
   </div>
 </div>
 
@@ -226,6 +291,8 @@
 
   function calculate() {
     const internal = parseInt(document.getElementById('internal-slider').value);
+    
+    // Pass Logic
     const fromTotal = 50 - internal;
     const fromExternal = 32;
     const required = Math.max(fromTotal, fromExternal);
@@ -233,15 +300,23 @@
     currentRequired = required;
     isPossible = required <= 80;
 
+    // Grade Logic
+    const aReq = Math.max(32, 75 - internal);
+    const oReq = Math.max(32, 91 - internal);
+
     const resPanel = document.getElementById('result-panel');
     const passReq = document.getElementById('pass-req');
     const emoMsg = document.getElementById('emotional-msg');
+    const aGradeVal = document.getElementById('a-grade-req');
+    const oGradeVal = document.getElementById('o-grade-req');
 
     resPanel.classList.add('visible');
 
     if (!isPossible) {
       passReq.innerHTML = "Passing is <span>IMPOSSIBLE</span> 💀";
       emoMsg.innerText = "even if you get full marks… passing is impossible 💀";
+      aGradeVal.innerText = "×";
+      oGradeVal.innerText = "×";
     } else {
       passReq.innerHTML = `You need <span>${required} / 80</span> to PASS 💀`;
       
@@ -252,6 +327,9 @@
       } else {
         emoMsg.innerText = "yeah… you’re in danger 💀";
       }
+
+      aGradeVal.innerText = aReq <= 80 ? `${aReq} / 80` : "×";
+      oGradeVal.innerText = oReq <= 80 ? `${oReq} / 80` : "×";
     }
     
     resPanel.scrollIntoView({ behavior: 'smooth' });
