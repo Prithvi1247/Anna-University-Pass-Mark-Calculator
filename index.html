@@ -3,359 +3,479 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anna University Pass Marks Calculator</title>
+<title>Anna University Pass Marks Calculator | GOATED Edition</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #0d0d10;
-    --surface:   #141418;
-    --card:      #1a1a20;
-    --border:    #2a2a35;
-    --border2:   #383848;
-    --amber:     #f0a020;
-    --amber-dim: #a06a10;
-    --amber-bg:  #1e1708;
-    --green:     #22c97a;
-    --green-bg:  #091a10;
-    --red:       #e84545;
-    --red-bg:    #1a0909;
-    --text:      #e8e8f0;
-    --text2:     #c7c7c7;
-    --text3:     #ffffff;
-    --radius:    12px;
-    --radius-sm: 8px;
-    --mono:      'JetBrains Mono', monospace;
-    --sans:      'Syne', sans-serif;
+    --bg: #050505;
+    --surface: #0f0f12;
+    --card: rgba(20, 20, 25, 0.8);
+    --border: rgba(255, 255, 255, 0.08);
+    --amber: #ffaa00;
+    --amber-glow: rgba(255, 170, 0, 0.3);
+    --red: #ff4444;
+    --green: #00ff88;
+    --text: #ffffff;
+    --text-dim: #88888e;
+    --radius: 24px;
+    --sans: 'Syne', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
   body {
     font-family: var(--sans);
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    padding: 0 0 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    background-image: 
+      radial-gradient(circle at 50% -20%, #1a1a25 0%, transparent 50%),
+      radial-gradient(circle at 0% 100%, #0a0a0f 0%, transparent 40%);
   }
 
-  .header {
-    padding: 40px 24px 20px;
-    text-align: center;
-  }
-  h1 {
-    font-size: clamp(24px, 6vw, 32px);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    line-height: 1.2;
-    margin-bottom: 8px;
-  }
-  .subtitle {
-    font-size: 16px;
-    color: var(--text2);
-  }
-
-  .container { max-width: 600px; margin: 0 auto; padding: 0 16px; }
-
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
-    margin-top: 20px;
-  }
-
-  label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text2);
-    margin-bottom: 12px;
-  }
-
-  .slider-wrap { position: relative; padding-top: 8px; }
-  input[type="range"] {
+  .container {
     width: 100%;
-    height: 8px;
-    -webkit-appearance: none;
-    appearance: none;
-    background: var(--border2);
-    border-radius: 4px;
-    outline: none;
-    cursor: pointer;
-  }
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    background: var(--amber);
-    border: 4px solid var(--card);
-    transition: transform 0.15s;
-  }
-  .slider-val {
-    font-family: var(--mono);
-    font-size: 48px;
-    font-weight: 700;
-    color: var(--amber);
-    text-align: center;
-    margin-bottom: 12px;
-  }
-  .slider-val span { font-size: 16px; color: var(--text3); font-weight: 400; }
-
-  .btn {
-    width: 100%;
-    padding: 18px;
-    background: var(--amber);
-    color: #0d0a04;
-    font-family: var(--sans);
-    font-size: 16px;
-    font-weight: 700;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    margin-top: 24px;
-    transition: transform 0.1s;
-  }
-  .btn:active { transform: scale(0.98); }
-
-  .result-panel {
-    display: none;
-    margin-top: 24px;
-    text-align: center;
-  }
-  .result-panel.visible { display: block; }
-
-  .big-stat {
+    max-width: 480px;
     padding: 40px 20px;
-    background: var(--surface);
-    border: 2px solid var(--border);
-    border-radius: var(--radius);
-    margin-bottom: 20px;
+    z-index: 1;
   }
-  .bs-num {
+
+  /* Header Section */
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeInDown 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--amber-glow);
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    border-radius: 100px;
     font-family: var(--mono);
-    font-size: 32px;
+    font-size: 10px;
     font-weight: 700;
-    color: var(--text);
-    margin-bottom: 12px;
-  }
-  .bs-num span { color: var(--amber); }
-  .bs-sub {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 2px;
     margin-bottom: 16px;
   }
 
-  .grade-targets {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
+  h1 {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
   }
-  .grade-item {
-    text-align: left;
-    background: rgba(255,255,255,0.03);
-    padding: 12px;
-    border-radius: var(--radius-sm);
-  }
-  .grade-label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; }
-  .grade-val { font-family: var(--mono); font-size: 16px; font-weight: 600; color: var(--amber); margin-top: 4px; }
 
-  .rules-box {
-    margin-top: 24px;
-    padding: 16px;
-    background: rgba(255,255,255,0.02);
-    border-radius: var(--radius-sm);
-    text-align: left;
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.6;
+  .subtitle {
+    font-size: 16px;
+    color: var(--text-dim);
+    font-weight: 400;
   }
-  .rules-box b { color: var(--text); }
-  .rules-list { list-style: none; margin-top: 8px; }
-  .rules-list li::before { content: "• "; color: var(--amber); }
 
-  .action-btns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 20px;
-  }
-  .btn-secondary {
-    background: var(--surface);
-    color: var(--text);
+  /* Main Card */
+  .main-card {
+    background: var(--card);
+    backdrop-filter: blur(20px);
     border: 1px solid var(--border);
-    padding: 14px;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    font-family: var(--sans);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s backwards;
   }
 
-  .footer-trust {
-    margin-top: 40px;
+  .input-group {
+    margin-bottom: 32px;
+  }
+
+  .label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 16px;
+  }
+
+  label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+  }
+
+  .val-display {
+    font-family: var(--mono);
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .val-display span {
+    font-size: 16px;
+    color: var(--text-dim);
+    margin-left: 4px;
+  }
+
+  /* Custom Slider */
+  .slider-container {
+    position: relative;
+    height: 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    outline: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 28px;
+    height: 28px;
+    background: var(--text);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+  }
+
+  /* Action Button */
+  .calc-btn {
+    width: 100%;
+    padding: 20px;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: 16px;
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .calc-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(255,255,255,0.15);
+  }
+
+  .calc-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Result Section */
+  .result-section {
+    display: none;
+    margin-top: 32px;
+    animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .result-section.visible {
+    display: block;
+  }
+
+  .fate-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .fate-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .fate-number {
+    font-family: var(--mono);
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .fate-number span {
+    font-size: 24px;
+    color: var(--text-dim);
+  }
+
+  .fate-msg {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--amber);
+  }
+
+  /* Grade Grid */
+  .grade-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .grade-box {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    padding: 16px;
+    border-radius: 16px;
+    text-align: left;
+  }
+
+  .grade-box label {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .grade-val {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* Info Section */
+  .info-strip {
+    background: rgba(255,255,255,0.02);
+    border-radius: 16px;
+    padding: 16px;
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+
+  .info-strip b { color: var(--text); display: block; margin-bottom: 4px; }
+
+  /* Share & Reset */
+  .secondary-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .action-btn {
+    padding: 16px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .action-btn:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: var(--text-dim);
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 64px;
     text-align: center;
     font-size: 12px;
-    color: #555;
-    padding: 20px;
+    color: var(--text-dim);
+    opacity: 0.5;
   }
 
+  /* Toast */
   .toast {
     position: fixed;
-    bottom: 20px;
+    bottom: 32px;
     left: 50%;
-    transform: translateX(-50%);
-    background: var(--amber);
-    color: #000;
-    padding: 10px 20px;
-    border-radius: 20px;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--text);
+    color: var(--bg);
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-weight: 800;
     font-size: 14px;
-    font-weight: 600;
-    display: none;
-    z-index: 100;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 1000;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive */
+  @media (max-width: 400px) {
+    h1 { font-size: 28px; }
+    .fate-number { font-size: 48px; }
   }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>I thought I was safe… I wasn’t 💀</h1>
-  <p class="subtitle">Enter your internals and see if you're actually passing</p>
-</div>
-
 <div class="container">
-  <div class="card">
-    <label>Internal Marks (0-20)</label>
-    <div class="slider-val" id="slider-display">14 <span>/ 20</span></div>
-    <div class="slider-wrap">
-      <input type="range" id="internal-slider" min="0" max="20" value="14" oninput="updateVal(this.value)">
-    </div>
-    <button class="btn" onclick="calculate()">CALCULATE MY FATE</button>
-  </div>
+  <header>
+    <div class="badge">R2017 / R2021</div>
+    <h1>I thought I was safe… I wasn’t 💀</h1>
+    <p class="subtitle">Enter your internals and see if you're actually passing</p>
+  </header>
 
-  <div id="result-panel" class="result-panel">
-    <div class="big-stat">
-      <div class="bs-num" id="pass-req"></div>
-      <div class="bs-sub" id="emotional-msg"></div>
-      
-      <div class="grade-targets" id="grade-targets">
-        <div class="grade-item">
-          <div class="grade-label">To get A grade (~75+)</div>
-          <div class="grade-val" id="a-grade-req">--</div>
-        </div>
-        <div class="grade-item">
-          <div class="grade-label">To get O grade (~90+)</div>
-          <div class="grade-val" id="o-grade-req">--</div>
-        </div>
+  <main class="main-card">
+    <div class="input-group">
+      <div class="label-row">
+        <label>Internal Marks</label>
+        <div class="val-display" id="val-display">14<span>/20</span></div>
+      </div>
+      <div class="slider-container">
+        <input type="range" id="internal-slider" min="0" max="20" value="14" oninput="updateUI(this.value)">
       </div>
     </div>
 
-    <div class="rules-box">
-      <b>Based on Anna University pattern:</b>
-      <ul class="rules-list">
-        <li>Internal: 20 marks</li>
-        <li>External: 80 marks</li>
-        <li>Pass: 50 total + 32 external</li>
-      </ul>
-    </div>
+    <button class="calc-btn" onclick="calculateFate()">Calculate My Fate</button>
 
-    <div class="action-btns">
-      <button class="btn-secondary" onclick="copyResult()">Copy Result</button>
-      <button class="btn-secondary" onclick="resetApp()">Try your friend's marks 😭</button>
-    </div>
-  </div>
+    <div id="result-section" class="result-section">
+      <div class="fate-card">
+        <div class="fate-title">Required External</div>
+        <div class="fate-number" id="fate-number">--<span>/80</span></div>
+        <div class="fate-msg" id="fate-msg">--</div>
+      </div>
 
-  <div class="footer-trust">
-    Built based on common AU evaluation rules (R2017/R2021)
-  </div>
+      <div class="grade-grid">
+        <div class="grade-box">
+          <label>A Grade (~75+)</label>
+          <div class="grade-val" id="a-req">--</div>
+        </div>
+        <div class="grade-box">
+          <label>O Grade (~90+)</label>
+          <div class="grade-val" id="o-req">--</div>
+        </div>
+      </div>
+
+      <div class="info-strip">
+        <b>AU Pattern:</b>
+        20 Internal + 80 External. Pass needs 50 total AND 32 external.
+      </div>
+
+      <div class="secondary-actions">
+        <button class="action-btn" onclick="copyResult()">Copy Result</button>
+        <button class="action-btn" onclick="resetApp()">Try Again 😭</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Built for Anna University Students • Not an official tool
+  </footer>
 </div>
 
 <div id="toast" class="toast">Copied to clipboard!</div>
 
 <script>
-  let currentRequired = 0;
-  let isPossible = true;
+  let currentReq = 0;
+  let possible = true;
 
-  function updateVal(val) {
-    document.getElementById('slider-display').innerHTML = `${val} <span>/ 20</span>`;
+  function updateUI(val) {
+    document.getElementById('val-display').innerHTML = `${val}<span>/20</span>`;
     const pct = (val / 20) * 100;
-    document.getElementById('internal-slider').style.background = `linear-gradient(to right, #a06a10 0%, #f0a020 ${pct}%, #2a2a35 ${pct}%, #2a2a35 100%)`;
+    document.getElementById('internal-slider').style.background = `linear-gradient(to right, var(--text) ${pct}%, rgba(255,255,255,0.1) ${pct}%)`;
   }
 
-  function calculate() {
+  function calculateFate() {
     const internal = parseInt(document.getElementById('internal-slider').value);
-    
-    // Pass Logic
-    const fromTotal = 50 - internal;
-    const fromExternal = 32;
-    const required = Math.max(fromTotal, fromExternal);
-    
-    currentRequired = required;
-    isPossible = required <= 80;
-
-    // Grade Logic
+    const req = Math.max(32, 50 - internal);
     const aReq = Math.max(32, 75 - internal);
     const oReq = Math.max(32, 91 - internal);
+    
+    currentReq = req;
+    possible = req <= 80;
 
-    const resPanel = document.getElementById('result-panel');
-    const passReq = document.getElementById('pass-req');
-    const emoMsg = document.getElementById('emotional-msg');
-    const aGradeVal = document.getElementById('a-grade-req');
-    const oGradeVal = document.getElementById('o-grade-req');
+    const section = document.getElementById('result-section');
+    const num = document.getElementById('fate-number');
+    const msg = document.getElementById('fate-msg');
+    const aVal = document.getElementById('a-req');
+    const oVal = document.getElementById('o-req');
 
-    resPanel.classList.add('visible');
+    section.classList.add('visible');
 
-    if (!isPossible) {
-      passReq.innerHTML = "Passing is <span>IMPOSSIBLE</span> 💀";
-      emoMsg.innerText = "even if you get full marks… passing is impossible 💀";
-      aGradeVal.innerText = "×";
-      oGradeVal.innerText = "×";
+    if (!possible) {
+      num.innerHTML = "IMPOSSIBLE 💀";
+      msg.innerText = "even if you get full marks… passing is impossible 💀";
+      msg.style.color = "var(--red)";
+      aVal.innerText = "×";
+      oVal.innerText = "×";
     } else {
-      passReq.innerHTML = `You need <span>${required} / 80</span> to PASS 💀`;
+      num.innerHTML = `${req}<span>/80</span>`;
       
-      if (required <= 40) {
-        emoMsg.innerText = "okay this is manageable 😌";
-      } else if (required <= 60) {
-        emoMsg.innerText = "this is gonna hurt 😭";
+      if (req <= 40) {
+        msg.innerText = "okay this is manageable 😌";
+        msg.style.color = "var(--green)";
+      } else if (req <= 60) {
+        msg.innerText = "this is gonna hurt 😭";
+        msg.style.color = "var(--amber)";
       } else {
-        emoMsg.innerText = "yeah… you’re in danger 💀";
+        msg.innerText = "yeah… you’re in danger 💀";
+        msg.style.color = "var(--red)";
       }
 
-      aGradeVal.innerText = aReq <= 80 ? `${aReq} / 80` : "×";
-      oGradeVal.innerText = oReq <= 80 ? `${oReq} / 80` : "×";
+      aVal.innerText = aReq <= 80 ? `${aReq}/80` : "×";
+      oVal.innerText = oReq <= 80 ? `${oReq}/80` : "×";
     }
-    
-    resPanel.scrollIntoView({ behavior: 'smooth' });
+
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
 
   function copyResult() {
-    const text = isPossible 
-      ? `I need ${currentRequired}/80 to pass Anna University 💀\nhttps://annapassmarks.vercel.app/`
+    const text = possible 
+      ? `I need ${currentReq}/80 to pass Anna University 💀\nhttps://annapassmarks.vercel.app/`
       : `Passing Anna University is impossible for me 💀\nhttps://annapassmarks.vercel.app/`;
     
     navigator.clipboard.writeText(text).then(() => {
       const toast = document.getElementById('toast');
-      toast.style.display = 'block';
-      setTimeout(() => toast.style.display = 'none', 2000);
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
     });
   }
 
   function resetApp() {
     document.getElementById('internal-slider').value = 14;
-    updateVal(14);
-    document.getElementById('result-panel').classList.remove('visible');
+    updateUI(14);
+    document.getElementById('result-section').classList.remove('visible');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // Init
-  updateVal(14);
+  updateUI(14);
 </script>
 
 </body>
