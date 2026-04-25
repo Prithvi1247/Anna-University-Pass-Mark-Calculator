@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How Much to Score to Pass Anna University Exams</title>
+<title>Anna University Pass Marks Calculator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -20,7 +20,6 @@
     --green-bg:  #091a10;
     --red:       #e84545;
     --red-bg:    #1a0909;
-    /* Blue removed as per requirements */
     --text:      #e8e8f0;
     --text2:     #c7c7c7;
     --text3:     #ffffff;
@@ -40,81 +39,33 @@
     padding: 0 0 80px;
   }
 
-  /* ─── Header ─── */
   .header {
-    border-bottom: 1px solid var(--border);
-    padding: 28px 24px 20px;
-    display: flex;
-    align-items: flex-end;
-    gap: 16px;
-  }
-  .header-badge {
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--amber);
-    background: var(--amber-bg);
-    border: 1px solid var(--amber-dim);
-    padding: 4px 10px;
-    border-radius: 999px;
+    padding: 40px 24px 20px;
+    text-align: center;
   }
   h1 {
-    font-size: clamp(20px, 5vw, 28px);
-    font-weight: 700;
+    font-size: clamp(24px, 6vw, 32px);
+    font-weight: 800;
     letter-spacing: -0.02em;
     color: var(--text);
-    line-height: 1.15;
+    line-height: 1.2;
+    margin-bottom: 8px;
   }
-  h1 span { color: var(--amber); }
   .subtitle {
-    font-size: 13px;
+    font-size: 16px;
     color: var(--text2);
-    margin-top: 4px;
   }
 
-  /* ─── Layout ─── */
-  .container { max-width: 820px; margin: 0 auto; padding: 0 16px; }
+  .container { max-width: 600px; margin: 0 auto; padding: 0 16px; }
 
-  /* ─── Tabs ─── */
-  .tab-bar {
-    display: flex;
-    gap: 2px;
-    padding: 20px 0 0;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 0;
-  }
-  .tab-btn {
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text2);
-    background: none;
-    border: none;
-    padding: 10px 18px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    transition: color 0.2s, border-color 0.2s;
-    letter-spacing: 0.01em;
-  }
-  .tab-btn:hover { color: var(--text); }
-  .tab-btn.active { color: var(--amber); border-bottom-color: var(--amber); }
-
-  .tab-panel { display: none; padding: 28px 0; }
-  .tab-panel.active { display: block; }
-
-  /* ─── Cards ─── */
   .card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 24px;
+    margin-top: 20px;
   }
-  .card + .card { margin-top: 16px; }
 
-  /* ─── Form elements ─── */
   label {
     display: block;
     font-size: 12px;
@@ -122,680 +73,212 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text2);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
-  input[type="number"], select {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 20px;
-    font-weight: 500;
-    padding: 14px 16px;
-    outline: none;
-    transition: border-color 0.2s;
-    -moz-appearance: textfield;
-  }
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
-  input[type="number"]:focus, select:focus { border-color: var(--amber); }
-  select { font-size: 14px; cursor: pointer; }
-  select option { background: var(--card); }
 
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media(max-width: 520px) { .form-row { grid-template-columns: 1fr; } }
-
-  /* ─── Slider ─── */
   .slider-wrap { position: relative; padding-top: 8px; }
   input[type="range"] {
     width: 100%;
-    height: 6px;
+    height: 8px;
     -webkit-appearance: none;
     appearance: none;
     background: var(--border2);
-    border-radius: 3px;
+    border-radius: 4px;
     outline: none;
     cursor: pointer;
   }
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 20px; height: 20px;
+    width: 24px; height: 24px;
     border-radius: 50%;
     background: var(--amber);
-    border: 3px solid var(--card);
+    border: 4px solid var(--card);
     transition: transform 0.15s;
   }
-  input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.2); }
   .slider-val {
     font-family: var(--mono);
-    font-size: 32px;
-    font-weight: 600;
+    font-size: 48px;
+    font-weight: 700;
     color: var(--amber);
     text-align: center;
-    margin-bottom: 8px;
-    letter-spacing: -0.03em;
+    margin-bottom: 12px;
   }
-  .slider-val span { font-size: 14px; color: var(--text3); font-weight: 400; }
+  .slider-val span { font-size: 16px; color: var(--text3); font-weight: 400; }
 
-  /* ─── Button ─── */
   .btn {
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     background: var(--amber);
     color: #0d0a04;
     font-family: var(--sans);
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
-    letter-spacing: 0.04em;
     border: none;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    margin-top: 20px;
-    transition: opacity 0.2s, transform 0.15s;
+    margin-top: 24px;
+    transition: transform 0.1s;
   }
-  .btn:hover { opacity: 0.9; }
   .btn:active { transform: scale(0.98); }
 
-  /* ─── Result Panel ─── */
   .result-panel {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.35s ease, transform 0.35s ease;
-    pointer-events: none;
-  }
-  .result-panel.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  /* Status bar */
-  .status-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 12px 20px;
-    border-radius: var(--radius-sm);
-    border: 1px solid;
-    margin-bottom: 20px;
+    display: none;
+    margin-top: 24px;
     text-align: center;
   }
-  .status-bar.safe    { background: var(--green-bg);  border-color: #1a5030; }
-  .status-bar.risk    { background: var(--amber-bg);  border-color: var(--amber-dim); }
-  .status-bar.danger  { background: var(--red-bg);    border-color: #5a1515; }
+  .result-panel.visible { display: block; }
 
-  .status-label {
-    font-weight: 800;
-    font-size: 18px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-  .safe   .status-label { color: var(--green); }
-  .risk   .status-label { color: var(--amber); }
-  .danger .status-label { color: var(--red); }
-
-  .status-text { font-size: 15px; font-weight: 500; }
-  .safe   .status-text { color: var(--green); opacity: 0.9; }
-  .risk   .status-text { color: var(--amber); opacity: 0.9; }
-  .danger .status-text { color: var(--red); opacity: 0.9; }
-
-  /* Grade grid - De-emphasized */
-  .grade-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: 8px;
-    margin-bottom: 20px;
-    opacity: 0.6; /* Lower visual weight */
-    transition: opacity 0.3s;
-  }
-  .grade-grid:hover { opacity: 1; }
-  .grade-tile {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 12px 8px;
-    text-align: center;
-  }
-  .grade-tile.target { border-color: var(--amber); background: var(--amber-bg); }
-  .grade-tile.impossible { opacity: 0.3; }
-  .grade-tile .g-label {
-    font-family: var(--mono);
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 2px;
-  }
-  .grade-tile.target .g-label { color: var(--amber); }
-  .grade-tile .g-sub {
-    font-size: 10px;
-    color: var(--text3);
-    font-family: var(--mono);
-  }
-  .grade-tile .g-req {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: 4px;
-    color: var(--text2);
-  }
-  .grade-tile.target .g-req { color: var(--amber); }
-
-  /* Big stat - DOMINANT */
   .big-stat {
-    text-align: center;
     padding: 40px 20px;
     background: var(--surface);
     border: 2px solid var(--border);
     border-radius: var(--radius);
-    margin-bottom: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    margin-bottom: 20px;
   }
-  .big-stat .bs-label { 
-    font-size: 13px; 
-    color: var(--text2); 
-    letter-spacing: 0.1em; 
-    text-transform: uppercase; 
-    margin-bottom: 16px; 
-    font-weight: 600;
-  }
-  .big-stat .bs-num {
+  .bs-num {
     font-family: var(--mono);
-    font-size: 84px; /* Significantly increased */
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    line-height: 1;
-    color: var(--amber);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
   }
-  .big-stat .bs-denom { font-size: 24px; color: var(--text3); font-weight: 400; margin-left: 4px; }
-  .big-stat .bs-sub { font-size: 24px; color: var(--text2); margin-top: 12px; font-weight: 500; }
+  .bs-num span { color: var(--amber); }
+  .bs-sub {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text2);
+  }
 
-  /* Info section */
-  .info-grid {
+  .action-btns {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
+    margin-top: 20px;
   }
-  @media(max-width: 520px) { .info-grid { grid-template-columns: 1fr; } }
-
-  .info-tile {
+  .btn-secondary {
     background: var(--surface);
+    color: var(--text);
     border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
     padding: 14px;
-  }
-  .info-tile .it-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
-  .info-tile .it-val { font-family: var(--mono); font-size: 16px; font-weight: 600; color: var(--text); }
-  .info-tile .it-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
-
-  /* ─── Multi Subject ─── */
-  .subject-list { display: flex; flex-direction: column; gap: 12px; }
-  .subject-row {
-    display: grid;
-    grid-template-columns: 30px 1fr 80px 80px 80px 30px;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    background: var(--surface);
-    border: 1px solid var(--border);
+    font-size: 14px;
+    font-weight: 600;
     border-radius: var(--radius-sm);
-  }
-  @media(max-width: 600px) {
-    .subject-row { grid-template-columns: 1fr 80px 80px 30px; }
-    .subject-num { display: none; }
-  }
-  .subject-num { font-family: var(--mono); font-size: 12px; color: var(--text3); }
-  .subject-name-input {
-    background: none; border: none; border-bottom: 1px solid var(--border);
-    color: var(--text); font-family: var(--sans); font-size: 14px; width: 100%; padding: 4px 0;
-  }
-  .subject-internal-input {
-    background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
-    color: var(--amber); font-family: var(--mono); font-size: 14px; width: 100%; padding: 4px 8px; text-align: center;
-  }
-  .subject-label-sm { font-size: 9px; color: var(--text3); text-transform: uppercase; margin-top: 4px; }
-  .subject-result { font-family: var(--mono); font-size: 18px; font-weight: 700; text-align: center; }
-  .sr-safe { color: var(--green); }
-  .sr-need { color: var(--amber); }
-  .sr-imp  { color: var(--red); }
-  .sr-fail { color: var(--text3); }
-
-  .risk-pill {
-    font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; text-align: center;
-  }
-  .risk-low { background: var(--green-bg); color: var(--green); border: 1px solid #1a5030; }
-  .risk-medium { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-dim); }
-  .risk-high { background: var(--red-bg); color: var(--red); border: 1px solid #5a1515; }
-  .risk-fail { background: #222; color: #555; border: 1px solid #333; }
-
-  .del-btn { background: none; border: none; color: var(--text3); font-size: 20px; cursor: pointer; }
-  .del-btn:hover { color: var(--red); }
-
-  .add-subject-btn {
-    width: 100%; padding: 12px; margin-top: 12px; background: none; border: 1px dashed var(--border2);
-    color: var(--text2); border-radius: var(--radius-sm); cursor: pointer; font-family: var(--sans); font-size: 13px;
-  }
-  .add-subject-btn:hover { border-color: var(--amber); color: var(--amber); }
-
-  .multi-summary { margin-top: 24px; display: none; }
-  .multi-summary.visible { display: block; }
-  .ms-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-  .ms-key { color: var(--text2); }
-  .ms-val { font-family: var(--mono); font-weight: 600; }
-
-  .section-heading {
-    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); margin: 32px 0 12px;
+    cursor: pointer;
+    font-family: var(--sans);
   }
 
-  .formula-block {
-    background: var(--surface); padding: 16px; border-radius: var(--radius-sm); font-family: var(--mono); font-size: 12px; line-height: 1.6; margin-bottom: 16px; border-left: 3px solid var(--amber);
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--amber);
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    display: none;
   }
-  .formula-block .kw { color: var(--amber); }
-  .formula-block .cmt { color: var(--text3); }
-
-  .grade-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 4px; }
-  .grade-table th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); padding: 8px 12px; border-bottom: 1px solid var(--border); }
-  .grade-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-family: var(--mono); color: var(--text); }
-  .grade-table tr:last-child td { border-bottom: none; }
-  .grade-table tr:hover td { background: var(--surface); }
-  .grade-table .gp { color: var(--amber); font-weight: 600; }
-
-  .footer { text-align: center; padding: 32px 16px 0; font-size: 12px; color: var(--text3); line-height: 1.7; }
-
-  @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-  .status-dot { width: 8px; height: 8px; border-radius: 50%; animation: pulse-dot 2.5s ease infinite; }
-  .safe .status-dot { background: var(--green); }
-  .risk .status-dot { background: var(--amber); }
-  .danger .status-dot { background: var(--red); }
 </style>
 </head>
-<script defer src="/_vercel/insights/script.js"></script>
 <body>
 
 <div class="header">
-  <div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-      <span class="header-badge">R2017 / R2021</span>
-    </div>
-    <h1>Enter your internal marks. <span>We'll tell you exactly how much you need to score to pass. </span></h1>
-    <p class="subtitle">Anna University · External marks required calculator</p>
-  </div>
+  <h1>I thought I was safe… I wasn’t 💀</h1>
+  <p class="subtitle">Enter your internals and see if you're actually passing</p>
 </div>
 
 <div class="container">
-
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('single', this)">Single Subject</button>
-  
-    <button class="tab-btn" onclick="switchTab('howto', this)">How It Works</button>
+  <div class="card">
+    <label>Internal Marks (0-20)</label>
+    <div class="slider-val" id="slider-display">14 <span>/ 20</span></div>
+    <div class="slider-wrap">
+      <input type="range" id="internal-slider" min="0" max="20" value="14" oninput="updateVal(this.value)">
+    </div>
+    <button class="btn" onclick="calculate()">CALCULATE MY FATE</button>
   </div>
 
-  <!-- ═══════════════ SINGLE SUBJECT ═══════════════ -->
-  <div class="tab-panel active" id="tab-single">
-
-    <div class="card">
-      <div style="margin-bottom:20px;">
-        <div class="slider-val" id="slider-display">14 <span>/ 20 internal</span></div>
-        <div class="slider-wrap">
-          <input type="range" min="0" max="20" value="14" id="internal-slider"
-            oninput="syncSlider(this.value)" onchange="triggerCalc()">
-        </div>
-        <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:6px;">
-          <span>0</span><span>10</span><span>20</span>
-        </div>
-      </div>
-
-      <div class="form-row" style="margin-bottom:20px;">
-        <div>
-          <label>Internal Marks (of 20)</label>
-          <input type="number" id="internal-input" min="0" max="20" value="14"
-            oninput="syncInput(this.value)" onchange="triggerCalc()">
-        </div>
-        <div>
-          <label>Target Grade (optional)</label>
-          <select id="target-grade" onchange="triggerCalc()">
-            <option value="PASS">Pass (≥50)</option>
-            <option value="B">B (51–60)</option>
-            <option value="B+">B+ (61–70)</option>
-            <option value="A" selected>A (71–80)</option>
-            <option value="A+">A+ (81–90)</option>
-            <option value="O">O (91–100)</option>
-          </select>
-        </div>
-      </div>
-
-      
+  <div id="result-panel" class="result-panel">
+    <div class="big-stat">
+      <div class="bs-num" id="pass-req"></div>
+      <div class="bs-sub" id="emotional-msg"></div>
     </div>
 
-    <!-- Result section -->
-    <div class="result-panel" id="single-result">
-      <div style="height:20px;"></div>
-
-      <div class="status-bar" id="status-bar">
-        <div class="status-dot"></div>
-        <div class="status-label" id="status-label">SAFE</div>
-        <div class="status-text" id="status-text"></div>
-      </div>
-
-      <div class="big-stat">
-        <div class="bs-label">Required External Marks to Pass</div>
-        <div class="bs-num" id="pass-req">—<span class="bs-denom">/80</span></div>
-        <div class="bs-sub" id="pass-sub">—</div>
-      </div>
-
-      <div class="section-heading" style="margin-top:24px;">Grade Breakdown</div>
-      <div class="grade-grid" id="grade-grid"></div>
-
-      <div class="section-heading">Details</div>
-      <div class="info-grid" id="detail-tiles"></div>
+    <div class="action-btns">
+      <button class="btn-secondary" onclick="copyResult()">Copy Result</button>
+      <button class="btn-secondary" onclick="resetApp()">Try your friend's marks 😭</button>
     </div>
   </div>
-
-  <!-- ═══════════════ MULTI SUBJECT ═══════════════ -->
-  <div class="tab-panel" id="tab-multi">
-
-    <div class="card" style="padding:0;overflow:hidden;">
-      <div style="padding:16px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-        <div style="font-size:14px;font-weight:600;color:var(--text);">Subjects</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);">Internal / 20 → Ext needed</div>
-      </div>
-      <div style="padding:16px;">
-        <div class="subject-list" id="subject-list"></div>
-        <button class="add-subject-btn" onclick="addSubject()">+ Add subject</button>
-      </div>
-    </div>
-
-    <div class="multi-summary" id="multi-summary">
-      <div class="section-heading" style="margin-top:0;">Summary</div>
-      <div id="multi-summary-rows"></div>
-    </div>
-
-  </div>
-
-  <!-- ═══════════════ HOW IT WORKS ═══════════════ -->
-  <div class="tab-panel" id="tab-howto">
-
-    <div class="card">
-      <div class="section-heading" style="margin-top:0;">Marking Scheme</div>
-      <p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:16px;">
-        Based on Anna University R2017 and R2021 regulations for all UG programs (B.E / B.Tech). Both regulations follow identical marking structures.
-      </p>
-      <div class="ms-row"><span class="ms-key">Regulation</span><span class="ms-val">R2017 / R2021</span></div>
-      <div class="ms-row"><span class="ms-key">Internal (IA)</span><span class="ms-val">20 marks total</span></div>
-      <div class="ms-row"><span class="ms-key">External (ESE)</span><span class="ms-val">80 marks total</span></div>
-      <div class="ms-row"><span class="ms-key">Grand Total</span><span class="ms-val">100 marks</span></div>
-      <div class="ms-row"><span class="ms-key">Min. External</span><span class="ms-val">32 / 80 (40%)</span></div>
-      <div class="ms-row"><span class="ms-key">Min. Total</span><span class="ms-val">50 / 100 (50%)</span></div>
-    </div>
-
-    <div class="card" style="margin-top:16px;">
-      <div class="section-heading" style="margin-top:0;">Pass Condition Logic</div>
-      <div class="formula-block">
-        <span class="kw">BOTH</span> must be satisfied:<br><br>
-        1. external_marks <span class="kw">≥ 32</span><br>
-        2. (internal + external) <span class="kw">≥ 50</span><br><br>
-        required = <span class="kw">max</span>(32, 50 - internal)
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:16px;">
-      <div class="section-heading" style="margin-top:0;">Grade Classification</div>
-      <table class="grade-table">
-        <thead>
-          <tr><th>Grade</th><th>Range</th><th>GPA</th><th>Status</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>O</td><td>91 – 100</td><td class="gp">10</td><td>Outstanding</td></tr>
-          <tr><td>A+</td><td>81 – 90</td><td class="gp">9</td><td>Excellent</td></tr>
-          <tr><td>A</td><td>71 – 80</td><td class="gp">8</td><td>Very Good</td></tr>
-          <tr><td>B+</td><td>61 – 70</td><td class="gp">7</td><td>Good</td></tr>
-          <tr><td>B</td><td>51 – 60</td><td class="gp">6</td><td>Average</td></tr>
-          <tr><td>RA</td><td>< 50</td><td class="gp">—</td><td>Fail</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-
 </div>
 
-<div class="footer">
-  AU Marks Predictor · Anna University R2017 / R2021 · Unofficial tool
-</div>
-<p style="font-size:12px;color:#888;text-align:center;margin-top:20px;">
-  Visitors: <span id="visitor-count">0</span>
-</p>
+<div id="toast" class="toast">Copied to clipboard!</div>
 
 <script>
-   
-const SCHEME = {
-  name: "Anna University R2017 / R2021",
-  maxInternal: 20,
-  maxExternal: 80,
-  maxTotal: 100,
-  minExternal: 32,
-  minTotal: 50,
-  grades: [
-    { label: "O",  min: 91, max: 100, gpa: 10 },
-    { label: "A+", min: 81, max: 90,  gpa: 9  },
-    { label: "A",  min: 71, max: 80,  gpa: 8  },
-    { label: "B+", min: 61, max: 70,  gpa: 7  },
-    { label: "B",  min: 51, max: 60,  gpa: 6  },
-    { label: "PASS", min: 50, max: 50, gpa: null },
-  ]
-};
+  let currentRequired = 0;
+  let isPossible = true;
 
-function clamp(val, min, max) { return Math.max(min, Math.min(max, val)); }
+  function updateVal(val) {
+    document.getElementById('slider-display').innerHTML = `${val} <span>/ 20</span>`;
+    const pct = (val / 20) * 100;
+    document.getElementById('internal-slider').style.background = `linear-gradient(to right, #a06a10 0%, #f0a020 ${pct}%, #2a2a35 ${pct}%, #2a2a35 100%)`;
+  }
 
-function calculateRequiredExternal(internalMarks) {
-  const ia = clamp(internalMarks, 0, SCHEME.maxInternal);
-  const fromTotalRule = SCHEME.minTotal - ia;
-  const fromExternalRule = SCHEME.minExternal;
-  const required = Math.max(fromExternalRule, fromTotalRule);
-  const isPossible = required <= SCHEME.maxExternal;
-  return {
-    required: isPossible ? required : null,
-    isPossible,
-    fromTotalRule,
-    bindingConstraint: fromTotalRule > fromExternalRule ? "total" : "external"
-  };
-}
-
-function calculateMarksForGrade(internalMarks, targetGrade) {
-  const ia = clamp(internalMarks, 0, SCHEME.maxInternal);
-  const gradeTargets = { "PASS": 50, "B": 51, "B+": 61, "A": 71, "A+": 81, "O": 91 };
-  const minTotal = gradeTargets[targetGrade] ?? 50;
-  const fromTotal = minTotal - ia;
-  const required = Math.max(SCHEME.minExternal, fromTotal);
-  const isPossible = required <= SCHEME.maxExternal;
-  return { required: isPossible ? required : null, isPossible, grade: targetGrade, minTotal };
-}
-
-function switchTab(name, btn) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  btn.classList.add('active');
-}
-
-function syncSlider(val) {
-  document.getElementById('internal-input').value = val;
-  document.getElementById('slider-display').innerHTML = `${val} <span>/ 20 internal</span>`;
-  updateSliderTrack(val);
-}
-
-function syncInput(val) {
-  val = clamp(parseInt(val) || 0, 0, 20);
-  document.getElementById('internal-slider').value = val;
-  document.getElementById('slider-display').innerHTML = `${val} <span>/ 20 internal</span>`;
-  document.getElementById('internal-input').value = val;
-  updateSliderTrack(val);
-}
-
-function updateSliderTrack(val) {
-  const pct = (val / 20) * 100;
-  const slider = document.getElementById('internal-slider');
-  slider.style.background = `linear-gradient(to right, #a06a10 0%, #f0a020 ${pct}%, #2a2a35 ${pct}%, #2a2a35 100%)`;
-}
-
-function triggerCalc() {
-  const ia = parseInt(document.getElementById('internal-input').value) || 0;
-  syncInput(ia);
-  calculateSingle();
-}
-
-function calculateSingle() {
-  const ia = parseInt(document.getElementById('internal-input').value) || 0;
-  const tg = document.getElementById('target-grade').value;
-
-  const pass = calculateRequiredExternal(ia);
-  const target = calculateMarksForGrade(ia, tg);
-
-  const panel = document.getElementById('single-result');
-  panel.classList.remove('visible');
-  void panel.offsetWidth;
-  setTimeout(() => panel.classList.add('visible'), 10);
-
-  const sb = document.getElementById('status-bar');
-  const sl = document.getElementById('status-label');
-  const st = document.getElementById('status-text');
-  sb.className = 'status-bar';
-
-  if (!pass.isPossible) {
-    sb.classList.add('danger');
-    sl.textContent = 'CANNOT PASS';
-    st.textContent = `Max achievable: ${ia + 80}/100`;
-  } else {
-    const riskLevel = pass.required >= 66 ? 'danger' : pass.required >= 46 ? 'risk' : 'safe';
-    sb.classList.add(riskLevel);
-    sl.textContent = riskLevel === 'danger' ? 'AT RISK' : riskLevel === 'risk' ? 'AT RISK' : 'SAFE';
-    if (riskLevel === 'safe') sl.textContent = 'SAFE';
+  function calculate() {
+    const internal = parseInt(document.getElementById('internal-slider').value);
+    const fromTotal = 50 - internal;
+    const fromExternal = 32;
+    const required = Math.max(fromTotal, fromExternal);
     
-    st.textContent = `Need ${pass.required}/80 to pass`;
+    currentRequired = required;
+    isPossible = required <= 80;
+
+    const resPanel = document.getElementById('result-panel');
+    const passReq = document.getElementById('pass-req');
+    const emoMsg = document.getElementById('emotional-msg');
+
+    resPanel.classList.add('visible');
+
+    if (!isPossible) {
+      passReq.innerHTML = "Passing is <span>IMPOSSIBLE</span> 💀";
+      emoMsg.innerText = "even if you get full marks… passing is impossible 💀";
+    } else {
+      passReq.innerHTML = `You need <span>${required} / 80</span> to PASS 💀`;
+      
+      if (required <= 40) {
+        emoMsg.innerText = "okay this is manageable 😌";
+      } else if (required <= 60) {
+        emoMsg.innerText = "this is gonna hurt 😭";
+      } else {
+        emoMsg.innerText = "yeah… you’re in danger 💀";
+      }
+    }
+    
+    resPanel.scrollIntoView({ behavior: 'smooth' });
   }
 
-  const passNum = document.getElementById('pass-req');
-  const passSub = document.getElementById('pass-sub');
-  if (!pass.isPossible) {
-    passNum.innerHTML = `× <span class="bs-denom">impossible</span>`;
-    passSub.textContent = `Cannot pass with any score`;
-  } else {
-    passNum.innerHTML = `${pass.required}<span class="bs-denom">/80</span>`;
-    passSub.textContent = `Target ${tg}: ${target.isPossible ? target.required + '/80' : 'not possible'}`;
+  function copyResult() {
+    const text = isPossible 
+      ? `I need ${currentRequired}/80 to pass Anna University 💀\nhttps://annapassmarks.vercel.app/`
+      : `Passing Anna University is impossible for me 💀\nhttps://annapassmarks.vercel.app/`;
+    
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = document.getElementById('toast');
+      toast.style.display = 'block';
+      setTimeout(() => toast.style.display = 'none', 2000);
+    });
   }
 
-  const gg = document.getElementById('grade-grid');
-  gg.innerHTML = '';
-  const gradeDefs = [
-    { label: "O",  min: 91, desc: "≥91" },
-    { label: "A+", min: 81, desc: "81–90" },
-    { label: "A",  min: 71, desc: "71–80" },
-    { label: "B+", min: 61, desc: "61–70" },
-    { label: "B",  min: 51, desc: "51–60" },
-    { label: "Pass", min: 50, desc: "≥50" },
-  ];
+  function resetApp() {
+    document.getElementById('internal-slider').value = 14;
+    updateVal(14);
+    document.getElementById('result-panel').classList.remove('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-  gradeDefs.forEach(g => {
-    const req = Math.max(SCHEME.minExternal, g.min - ia);
-    const possible = req <= SCHEME.maxExternal;
-    const isTarget = g.label === tg || (g.label === "Pass" && tg === "PASS");
-    const tile = document.createElement('div');
-    tile.className = 'grade-tile ' + (!possible ? 'impossible' : isTarget ? 'target' : '');
-    tile.innerHTML = `
-      <div class="g-label">${g.label}</div>
-      <div class="g-sub">${g.desc}</div>
-      <div class="g-req">${possible ? req + '/80' : '×'}</div>
-    `;
-    gg.appendChild(tile);
-  });
-
-  const dt = document.getElementById('detail-tiles');
-  dt.innerHTML = `
-    <div class="info-tile">
-      <div class="it-label">Your Internal</div>
-      <div class="it-val">${ia} / 20</div>
-      <div class="it-sub">${Math.round((ia/20)*100)}% of internal</div>
-    </div>
-    <div class="info-tile">
-      <div class="it-label">Max Achievable</div>
-      <div class="it-val">${ia + 80} / 100</div>
-      <div class="it-sub">With 80/80 external</div>
-    </div>
-  `;
-}
-
-let subjects = [
-  { name: "Engineering Mathematics", internal: 16 },
-  { name: "Data Structures", internal: 12 },
-  { name: "Computer Networks", internal: 8 },
-];
-
-function renderSubjects() {
-  const list = document.getElementById('subject-list');
-  list.innerHTML = '';
-  subjects.forEach((s, i) => {
-    const pass = calculateRequiredExternal(s.internal);
-    const riskLevel = !pass.isPossible ? 'fail' : pass.required >= 66 ? 'high' : pass.required >= 46 ? 'medium' : 'low';
-
-    let riskHtml = `<span class="risk-pill risk-${riskLevel}">${riskLevel}</span>`;
-    let reqHtml = `<div class="subject-result ${riskLevel === 'high' || riskLevel === 'fail' ? 'sr-imp' : riskLevel === 'medium' ? 'sr-need' : 'sr-safe'}">${pass.isPossible ? pass.required : '—'}</div>`;
-
-    const row = document.createElement('div');
-    row.className = 'subject-row';
-    row.innerHTML = `
-      <div class="subject-num">${i + 1}</div>
-      <div>
-        <input class="subject-name-input" type="text" value="${s.name}" oninput="subjects[${i}].name = this.value">
-      </div>
-      <div>
-        <input class="subject-internal-input" type="number" min="0" max="20" value="${s.internal}"
-          oninput="subjects[${i}].internal = clamp(parseInt(this.value)||0,0,20); renderSubjects()">
-      </div>
-      ${reqHtml}
-      ${riskHtml}
-      <button class="del-btn" onclick="removeSubject(${i})">×</button>
-    `;
-    list.appendChild(row);
-  });
-  updateMultiSummary();
-}
-
-function addSubject() {
-  subjects.push({ name: `Subject ${subjects.length + 1}`, internal: 10 });
-  renderSubjects();
-}
-
-function removeSubject(i) {
-  subjects.splice(i, 1);
-  renderSubjects();
-}
-
-function updateMultiSummary() {
-  const summary = document.getElementById('multi-summary');
-  const rows = document.getElementById('multi-summary-rows');
-  if (!subjects.length) { summary.classList.remove('visible'); return; }
-  summary.classList.add('visible');
-
-  const results = subjects.map(s => ({ ...s, ...calculateRequiredExternal(s.internal) }));
-  const impossible = results.filter(r => !r.isPossible).length;
-  const high = results.filter(r => r.isPossible && r.required >= 66).length;
-  const low = results.filter(r => r.isPossible && r.required < 46).length;
-  const medium = results.length - impossible - high - low;
-
-  rows.innerHTML = `
-    <div class="ms-row"><span class="ms-key">Total subjects</span><span class="ms-val">${results.length}</span></div>
-    <div class="ms-row"><span class="ms-key">Safe</span><span class="ms-val" style="color:var(--green)">${low}</span></div>
-    <div class="ms-row"><span class="ms-key">At Risk</span><span class="ms-val" style="color:var(--amber)">${medium + high}</span></div>
-    <div class="ms-row"><span class="ms-key">Cannot Pass</span><span class="ms-val" style="color:var(--red)">${impossible}</span></div>
-  `;
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  syncSlider(14);
-  calculateSingle();
-  renderSubjects();
-});
+  // Init
+  updateVal(14);
 </script>
+
 </body>
 </html>
